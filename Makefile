@@ -71,7 +71,7 @@ clean:
 		rm -rf build/*
 		rm -rf src/*
 
-include *.mk
+include mks/*.mk
 
 .PHONY: bundler
 bundler: 	## Build fluent-bit.
