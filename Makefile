@@ -61,7 +61,11 @@ all: bundle
 
 .PHONY: bundle
 bundle: 	## Compiler all components into a kernel bundle
-bundle: bundler busybox vinitd fluent-bit chrony linux strace tcpdump fluentdisk
+bundle: bundler busybox vinitd fluent-bit chrony linux strace tcpdump fluentdisk bundle-only
+
+.PHONY: bundle-only
+bundle-only: 	## Compiler all components into a kernel bundle
+bundle-only:
 	@./bundler/build/bundler fetch-libs build
 	@./bundler/build/bundler generate-config ${COMPILER} build $(BUNDLE_TAGS) > ./bundler/build/bundle.config && cat ./bundler/build/bundle.config
 	@./bundler/build/bundler create ${BUNDLE_VERSION} ./bundler/build/bundle.config > kernel-${BUNDLE_VERSION}
@@ -88,3 +92,8 @@ update: update-fluent-bit update-busybox update-chrony update-strace update-tcpd
 .PHONY: versions
 versions:	## List all dependency versions.
 versions: version-fluent-bit version-busybox version-chrony version-strace version-tcpdump version-fluentdisk version-vinitd version-linux
+
+.PHONY: dev-vinitd
+dev-vinitd: build-vinitd
+	@./bundler/build/bundler create ${BUNDLE_VERSION} ./bundler/build/bundle.config > kernel-${BUNDLE_VERSION}
+	cp kernel-${BUNDLE_VERSION} ~/.vorteild/kernels/watch/
