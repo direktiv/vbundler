@@ -73,6 +73,7 @@ bundle-only:
 
 .PHONY: dependencies
 dependencies: 	## Clone all dependencies and install required system tools.
+dependencies: update
 		@if which dnf; then \
 			echo "using dnf"; \
 			if which go; then echo "Skipping go (already installed)"; else ${SUDO} dnf -y install golang.x86_64; fi; \
@@ -83,7 +84,7 @@ dependencies: 	## Clone all dependencies and install required system tools.
 			if which flex; then echo "Skipping flex (already installed)"; else ${SUDO} dnf -y install -y flex; fi; \
 			if which bison; then echo "Skipping bison (already installed)"; else ${SUDO} dnf -y install -y bison; fi; \
 			if [ ! -f ./libseccomp-2.4.4.tar.gz ]; then \
-				dnf install -y libseccomp-devel; \
+				${SUDO} dnf install -y libseccomp-devel; \
 				wget https://github.com/seccomp/libseccomp/releases/download/v2.4.4/libseccomp-2.4.4.tar.gz; \
 				tar -xzf libseccomp-2.4.4.tar.gz; \
 				cd libseccomp-2.4.4 && ./configure && make && ${SUDO} make install && cd ..; \
