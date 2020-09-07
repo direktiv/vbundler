@@ -73,6 +73,7 @@ bundle-only:
 
 .PHONY: dependencies
 dependencies: 	## Clone all dependencies and install required system tools.
+dependencies: update
 		@if which dnf; then \
 			echo "using dnf"; \
 			if which go; then echo "Skipping go (already installed)"; else ${SUDO} dnf -y install golang.x86_64; fi; \
@@ -85,7 +86,7 @@ dependencies: 	## Clone all dependencies and install required system tools.
 			if [ ! -f ./libseccomp-2.4.4.tar.gz ]; then \
 				wget https://github.com/seccomp/libseccomp/releases/download/v2.4.4/libseccomp-2.4.4.tar.gz; \
 				tar -xzf libseccomp-2.4.4.tar.gz; \
-				cd libseccomp-2.4.4 && ./configure && make && ${SUDO} make install; \
+				cd libseccomp-2.4.4 && ./configure && make && ${SUDO} make install && cd ..; \
 			fi; \
 			if [ ! -f ./libpcap-1.9.1.tar.gz ]; then \
 				wget http://www.tcpdump.org/release/libpcap-1.9.1.tar.gz; \
