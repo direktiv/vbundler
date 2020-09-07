@@ -108,7 +108,7 @@ dependencies: update
 			if [ -d /usr/share/doc/libseccomp-dev ]; then echo "Skipping libseccomp headers (already installed)"; else ${SUDO} apt-get install -y libseccomp-dev; fi; \
 			if [ -d /usr/share/doc/libpcap-dev ]; then echo "Skipping libpcap-dev headers (already installed)"; else ${SUDO} apt-get install -y libpcap-dev; fi; \
 			if [ ! -f /usr/include/libelf.h ]; then \
-				${SUDO} apt-get install libelf-dev
+				${SUDO} apt-get install libelf-dev; \
 			fi; \
 		else \
 			echo "Couldn't find package manager. Skipped installing prerequisite packages."; \
