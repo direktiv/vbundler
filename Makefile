@@ -75,6 +75,26 @@ bundle-only:
 dependencies: 	## Clone all dependencies and install required system tools.
 		@if which dnf; then \
 			echo "using dnf"; \
+			if which go; then echo "Skipping go (already installed)"; else ${SUDO} dnf -y install golang.x86_64; fi; \
+			if which g++; then echo "Skipping gcc-c++ (already installed)"; else ${SUDO} dnf -y install gcc-c++; fi; \
+			if which gcc; then echo "Skipping gcc (already installed)"; else ${SUDO} dnf -y install gcc; fi; \
+			if [ -f /usr/lib64/libcrypt.a ]; then echo "Skipping glibc-static (already installed)"; else ${SUDO} dnf config-manager --enable PowerTools && ${SUDO} dnf install -y glibc-static; fi; \
+			if which cmake; then echo "Skipping cmake (already installed)"; else ${SUDO} dnf -y install -y cmake; fi; \
+			if which flex; then echo "Skipping flex (already installed)"; else ${SUDO} dnf -y install -y flex; fi; \
+			if which bison; then echo "Skipping bison (already installed)"; else ${SUDO} dnf -y install -y bison; fi; \
+			if [ ! -f ./libseccomp-2.4.4.tar.gz ]; then \
+				wget https://github.com/seccomp/libseccomp/releases/download/v2.4.4/libseccomp-2.4.4.tar.gz; \
+				tar -xzf libseccomp-2.4.4.tar.gz; \
+				cd libseccomp-2.4.4 && ./configure && make && ${SUDO} make install; \
+			fi; \
+			if [ ! -f ./libpcap-1.9.1.tar.gz ]; then \
+				wget http://www.tcpdump.org/release/libpcap-1.9.1.tar.gz; \
+				tar -xzf libpcap-1.9.1.tar.gz; \
+				cd libpcap-1.9.1 && ./configure && make && ${SUDO} make install; \
+			fi; \
+			if [ ! -f /usr/include/libelf.h ]; then \
+				${SUDO} dnf -y install elfutils-libelf-devel; \
+			fi; \
 		elif which apt; then \
 			echo "using apt"; \
 			if which go; then echo "Skipping go (already installed)"; else ${SUDO} apt install -y golang-go; fi; \
