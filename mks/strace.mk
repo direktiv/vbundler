@@ -16,7 +16,7 @@ ifneq ("${STRACE}", "skip")
 	@rm -f build/strace
 	@rm -rf src/strace
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${STRACE} git@github.com:vorteil/strace.git --depth 1; \
+	@cd src && if git clone --single-branch --branch=${STRACE} https://github.com/vorteil/strace.git--depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \

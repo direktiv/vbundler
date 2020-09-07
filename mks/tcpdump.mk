@@ -16,7 +16,7 @@ ifneq ("${TCPDUMP}", "skip")
 	@rm -f build/tcpdump
 	@rm -rf src/tcpdump
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${TCPDUMP} git@github.com:vorteil/tcpdump.git --depth 1; \
+	@cd src && if git clone --single-branch --branch=${TCPDUMP} https://github.com/vorteil/tcpdump.git --depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \

@@ -3,6 +3,7 @@ BUNDLE_VERSION := 99.99.1 	### Kernel bundle version.
 COMPILER := 3.0.0 	### Minimum version Vorteil compiler compatible with bundle.
 LINKER_DST = "/vorteil/ld-linux-x86-64.so.2"
 CC:=gcc
+SUDO := sudo
 
 # define version/branches
 FLUENTBIT := 'v1.5.4'
@@ -69,6 +70,24 @@ bundle-only:
 	@./bundler/build/bundler fetch-libs build
 	@./bundler/build/bundler generate-config ${COMPILER} build $(BUNDLE_TAGS) > ./bundler/build/bundle.config && cat ./bundler/build/bundle.config
 	@./bundler/build/bundler create ${BUNDLE_VERSION} ./bundler/build/bundle.config > kernel-${BUNDLE_VERSION}
+
+.PHONY: dependencies
+dependencies: 	## Clone all dependencies and install required system tools.
+		@if which dnf; then \
+			echo "using dnf"; \
+		elif which apt; then \
+			echo "using apt"; \
+			if which go; then echo "Skipping go (already installed)"; else ${SUDO} apt install -y golang-go; fi; \
+			if which gcc; then echo "Skipping gcc (already installed)"; else ${SUDO} apt install -y build-essential; fi; \
+			if which cmake; then echo "Skipping cmake (already installed)"; else ${SUDO} apt install -y cmake; fi; \
+			if which flex; then echo "Skipping flex (already installed)"; else ${SUDO} apt install -y flex; fi; \
+			if which bison; then echo "Skipping bison (already installed)"; else ${SUDO} apt install -y bison; fi; \
+			if [ -d /usr/share/doc/libssl-dev ]; then echo "Skipping OpenSSL headers (already installed)"; else ${SUDO} apt install -y libssl-dev; fi; \
+			if [ -d /usr/share/doc/libseccomp-dev ]; then echo "Skipping libseccomp headers (already installed)"; else ${SUDO} apt-get install -y libseccomp-dev; fi; \
+			if [ -d /usr/share/doc/libpcap-dev ]; then echo "Skipping libpcap-dev headers (already installed)"; else ${SUDO} apt-get install -y libpcap-dev; fi; \
+		else \
+			echo "Couldn't find package manager. Skipped installing prerequisite packages."; \
+		fi
 
 .PHONY: clean
 clean:

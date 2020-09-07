@@ -13,7 +13,7 @@ version-chrony:
 .PHONY: update-chrony
 update-chrony: 	## Re-clone fluent-bit.
 ifneq ("${CHRONY}", "skip")
-	# @rm -f build/fluent-bit
+	@rm -f build/chronyd
 	@rm -rf src/chrony
 	@mkdir -p src
 	@cd src && if git clone --single-branch --branch=${CHRONY} https://github.com/mlichvar/chrony --depth 1; \

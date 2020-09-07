@@ -16,7 +16,7 @@ ifneq ("${VINITD}", "skip")
 	@rm -f build/vinitd
 	@rm -rf src/vinitd
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${VINITD} git@github.com:vorteil/vinitd.git --depth 1; \
+	@cd src && if git clone --single-branch --branch=${VINITD} https://github.com/vorteil/vinitd.git --depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \

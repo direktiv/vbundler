@@ -38,7 +38,7 @@ ifneq ("${LINUX}", "skip")
 	fi
 	@if [ ! -d src/linux/drivers/_vorteil ]; 													\
 		then																	\
-				cd src && rm -Rf vlinux && git clone git@github.com:vorteil/vlinux.git --depth 1 && \
+				cd src && rm -Rf vlinux && git clone https://github.com/vorteil/vlinux.git --depth 1 && \
 				cd linux && git apply ../vlinux/0001-vorteil-${LINUX}.patch \
 		;																		\
 	fi
