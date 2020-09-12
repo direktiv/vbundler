@@ -13,8 +13,7 @@ STRACE    := 'master'
 TCPDUMP   := 'master'
 FLUENTDISK:= 'master'
 VINITD    := 'master'
-# LINUX     := 'v5.8.5'
-LINUX     := 'v5.7.10'
+LINUX     := 'v5.8.8'
 
 BUNDLE_TAGS := --tags=linux \
 				--tags=vinitd \
