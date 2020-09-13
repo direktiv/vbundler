@@ -1,13 +1,24 @@
+<!-- PROJECT LOGO -->
+<br />
 <p align="center">
-
-![Image of Yaktocat](assets/vlogo.png)
-
-# vbundler
-
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="assets/vlogo.png" alt="Logo" width="80" height="80">
+  </a>
+  <h3 align="center">vbundler</h3>
+  <h5 align="center">build system for vorteil.io micro virtual machines</h5>
 </p>
 
-Vorteil virtual machines are based on bundles which contain all artifacts required to run a virtual machine.
+<hr/>
 
+Virtual machines build with [vorteil.io tools](https://github.com/vorteil/vorteil) are based on bundles providing all the required dependencies to run the VM. This project is the base build system to generate the bundles.
+
+#### Bundle Layout
+
+#### Build Process
+
+##### Build on local machine
+
+##### Build on vorteil
 
 Bundles contain:
 
