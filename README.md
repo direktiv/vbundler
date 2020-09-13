@@ -1,6 +1,13 @@
+<p align="center">
+
+![Image of Yaktocat](assets/vlogo.png)
+
 # vbundler
 
-Vorteil virtual machines are based on bundles which contain all binaries and libraries required to run the configured applications. During the build process vorteil extracts the files it needs from those bundles. This project builds these bundles.
+</p>
+
+Vorteil virtual machines are based on bundles which contain all artifacts required to run a virtual machine.
+
 
 Bundles contain:
 
