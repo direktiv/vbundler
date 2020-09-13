@@ -30,3 +30,7 @@ Bundles contain:
 - [strace](https://github.com/vorteil/strace)
 - [tcpdump](https://github.com/vorteil/tcpdump)
 - shared objects
+
+#### License
+
+Distributed under the Apache 2.0 License. See `LICENSE` for more information.
