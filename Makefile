@@ -13,6 +13,7 @@ STRACE    := 'master'
 TCPDUMP   := 'master'
 FLUENTDISK:= 'master'
 VINITD    := 'master'
+BUNDLER   := 'master'
 LINUX     := 'v5.8.8'
 
 BUNDLE_TAGS := --tags=linux \
@@ -119,14 +120,6 @@ clean:
 		rm -rf src/*
 
 include mks/*.mk
-
-.PHONY: bundler
-bundler: 	## Build fluent-bit.
-bundler: build-bundler
-
-.PHONY: build-bundler
-build-bundler:
-	@cd bundler && mkdir -p build && go build -o build/bundler cmd/main.go
 
 .PHONY: update
 update: 	## Re-clone all dependencies.
