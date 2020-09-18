@@ -9,7 +9,7 @@
 
 <hr/>
 
-Virtual machines build with [vorteil.io tools](https://github.com/vorteil/vorteil) are based on bundles providing all the required dependencies to run the VM. During build the required files are getting selected from a bundle. This project is the builder for those bundles.
+Virtual machines build with [vorteil.io tools](https://github.com/vorteil/vorteil) are based on bundles providing all the required dependencies to run the VM. During build the required files are getting selected from a bundle. This project is the builder for those bundles. This project is used to build the bundle with all dependencies from scratch.
 
 #### Bundle Layout
 
@@ -18,29 +18,25 @@ The bundle is the base for the first partition of the vorteil.io image. It is ba
 **Metadata file**
 ```yaml
 {
-	"version": "1.0.0",
-	"files": [
-		{
-			"name": "vinitd",
-			"size": 1000000,
-			"tags": []
-		},
-		{
-			"name": "strace",
-			"size": 1000000,
-			"tags": []
-		},
-		{
-			"name": "fluent-bit",
-			"size": 1000000,
-			"tags": ["logs"]
-		},
-        {
-			"name": "tcpdump",
-			"size": 1000000,
-			"tags": ["tcp"]
-		}
-	]
+  "version": "1.0.0",
+  "files": [
+  {
+    "name": "vinitd",
+    "tags": []
+  },
+  {
+    "name": "strace",
+    "tags": []
+  },
+  {
+    "name": "fluent-bit",
+    "tags": ["logs"]
+  },
+  {
+    "name": "tcpdump",
+    "tags": ["tcp"]
+    }
+  ]
 }
 ```
 
@@ -58,7 +54,9 @@ During build of the image the manifest gets removed and the necessary artifacts 
     <img src="assets/vdisk.png" alt="bundle">
 </p>
 
-The final disk has two partitions. The first one contains the created live bundle.
+The final disk has two partitions. The first one contains the created live bundle and the second partition contains all files from the project used to build this image.
+
+The first partition is mounted under _/vorteil_ during boot of the system. The second partition is mounted under _/_.
 
 **Artifacts for builder:**
 
@@ -70,7 +68,6 @@ The final disk has two partitions. The first one contains the created live bundl
 - [busybox](https://busybox.net/)
 - [strace](https://github.com/vorteil/strace)
 - [tcpdump](https://github.com/vorteil/tcpdump)
-
 
 #### Building
 
