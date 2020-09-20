@@ -123,7 +123,7 @@ include mks/*.mk
 
 .PHONY: update
 update: 	## Re-clone all dependencies.
-update: update-fluent-bit update-busybox update-chrony update-strace update-tcpdump update-fluentdisk update-vinitd update-linux
+update: update-fluent-bit update-busybox update-chrony update-strace update-tcpdump update-fluentdisk update-vinitd update-linux update-bundler
 
 .PHONY: versions
 versions:	## List all dependency versions.
