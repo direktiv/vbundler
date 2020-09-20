@@ -82,6 +82,7 @@ dependencies: update
 			if [ -f /usr/lib64/libcrypt.a ]; then echo "Skipping glibc-static (already installed)"; else ${SUDO} dnf config-manager --enable PowerTools && ${SUDO} dnf install -y glibc-static; fi; \
 			if which cmake; then echo "Skipping cmake (already installed)"; else ${SUDO} dnf -y install -y cmake; fi; \
 			if which flex; then echo "Skipping flex (already installed)"; else ${SUDO} dnf -y install -y flex; fi; \
+			if which pkg-config; then echo "Skipping pkg-config (already installed)"; else ${SUDO} dnf -y install -y pkg-config; fi; \
 			if which bison; then echo "Skipping bison (already installed)"; else ${SUDO} dnf -y install -y bison; fi; \
 			if [ ! -f ./libseccomp-2.4.4.tar.gz ]; then \
 				${SUDO} dnf install -y libseccomp-devel; \
@@ -104,6 +105,7 @@ dependencies: update
 			if which cmake; then echo "Skipping cmake (already installed)"; else ${SUDO} apt install -y cmake; fi; \
 			if which flex; then echo "Skipping flex (already installed)"; else ${SUDO} apt install -y flex; fi; \
 			if which bison; then echo "Skipping bison (already installed)"; else ${SUDO} apt install -y bison; fi; \
+			if which pkg-config; then echo "Skipping pkg-config (already installed)"; else ${SUDO} apt install -y pkg-config; fi; \
 			if [ -d /usr/share/doc/libssl-dev ]; then echo "Skipping OpenSSL headers (already installed)"; else ${SUDO} apt install -y libssl-dev; fi; \
 			if [ -d /usr/share/doc/libseccomp-dev ]; then echo "Skipping libseccomp headers (already installed)"; else ${SUDO} apt-get install -y libseccomp-dev; fi; \
 			if [ -d /usr/share/doc/libpcap-dev ]; then echo "Skipping libpcap-dev headers (already installed)"; else ${SUDO} apt-get install -y libpcap-dev; fi; \
