@@ -1,0 +1,44 @@
+dist: bionic
+
+language: go
+
+go:
+  - 1.15
+
+stages:
+  - name: build
+
+jobs:
+  include:
+    - stage: build
+      os: linux
+      dist: bionic
+      before_script:
+        - make dependencies
+        - go get -u gopkg.in/yaml.v2
+      script:
+        - if [ -z "$TRAVIS_TAG" ]; then export BUNDLE_VERSION=99.99.99; else export BUNDLE_VERSION=$TRAVIS_TAG; fi;
+        - echo $TRAVIS_TAG
+        - export GOBINARYDIR=/home/travis/gopath/bin/
+        - make bundle
+        - if [ ! -z "$TRAVIS_TAG" ]; then echo $GKEY > gkey64; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then base64 -d ./gkey64 > ./gkey; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then gcloud auth activate-service-account --key-file ./gkey; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then go run misc/ci/main.go -tag ${BUNDLE_VERSION} -kernel-source kernels; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then echo $KEY_PUB > key.pub1 && base64 -d ./key.pub1 > ./key.pub; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then echo $KEY_PRIV > key.priv1 && base64 -d ./key.priv1 > ./key.priv; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then gpg --import ./key.pub; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then gpg --allow-secret-key-import --import ./key.priv; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then gpg --armor --local-user $KEY_ID --detach-sig kernel-$BUNDLE_VERSION; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp kernel-$BUNDLE_VERSION $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp kernel-$BUNDLE_VERSION.asc $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION.asc; fi;
+        - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp manifest.txt $GSUTIL_BASE/manifest.txt; fi;
+      deploy:
+        provider: releases
+        api_key: $GTOKEN
+        file:
+          - kernel-$BUNDLE_VERSION
+        skip_cleanup: true
+        draft: true
+        on: 
+          tags: true
