@@ -33,3 +33,12 @@ jobs:
         - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp kernel-$BUNDLE_VERSION $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION; fi;
         - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp kernel-$BUNDLE_VERSION.asc $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION.asc; fi;
         - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp manifest.txt $GSUTIL_BASE/manifest.txt; fi;
+      deploy:
+        provider: releases
+        api_key: $GTOKEN
+        file:
+          - kernel-$BUNDLE_VERSION
+        skip_cleanup: true
+        draft: true
+        on: 
+          tags: true
