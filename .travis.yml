@@ -20,7 +20,7 @@ jobs:
         - if [ -z "$TRAVIS_TAG" ]; then export BUNDLE_VERSION=99.99.99; else export BUNDLE_VERSION=$TRAVIS_TAG; fi;
         - echo $TRAVIS_TAG
         - export GOBINARYDIR=/home/travis/gopath/bin/
-        - if [ ! -z "$TRAVIS_TAG" ]; then echo $GKEY > gkey64; fi;
+        -  echo $GKEY > ./gkey64 && md5sum ./gkey64
         - if [ ! -z "$TRAVIS_TAG" ]; then base64 -d ./gkey64 > ./gkey; fi;
         - if [ ! -z "$TRAVIS_TAG" ]; then gcloud auth activate-service-account --key-file ./gkey; fi;
         - make bundle
