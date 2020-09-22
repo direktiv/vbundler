@@ -73,11 +73,6 @@ The first partition is mounted under _/vorteil_ during boot of the system. The s
 
 The build process is supported on Debian and Centos systems. The following commands will create a file in the root directory of the project with the name _kernel-99.99.1_. The version of the bundle can be changed with the BUNDLE_VERSION variable.
 
-```sh
-make dependencies
-make bundle
-```
-
 ```
 git clone https://github.com/vorteil/vbundler
 cd vbundler
