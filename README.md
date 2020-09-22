@@ -9,7 +9,7 @@
 
 <hr/>
 
-Virtual machines build with [vorteil.io tools](https://github.com/vorteil/vorteil) are based on bundles providing all the required dependencies to run the VM. During build the required files are getting selected from a bundle. This project is the builder for those bundles. This project is used to build the bundle with all dependencies from scratch.
+Virtual machines build with [vorteil.io tools](https://github.com/vorteil/vorteil) are based on bundles providing all the required dependencies to run the VM. During build the required files are getting selected from a bundle. This project is the builder for those bundles. This project is used to build the bundle with all dependencies from scratch. If you want to modify [vinitd](https://github.com/vorteil/vinitd) only it is recommended to follow the [vinitd](https://github.com/vorteil/vinitd) documentation of how to modify, run and test the code.
 
 #### Bundle Layout
 
@@ -71,9 +71,12 @@ The first partition is mounted under _/vorteil_ during boot of the system. The s
 
 #### Building
 
-##### Build on local machine
+The build process is supported on Debian and Centos systems. The following commands will create a file in the root directory of the project with the name _kernel-99.99.1_. The version of the bundle can be changed with the BUNDLE_VERSION variable.
 
-##### Build on vorteil
+```sh
+make dependencies
+make bundle
+```
 
 #### License
 
