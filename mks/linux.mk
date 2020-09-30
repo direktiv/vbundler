@@ -48,6 +48,6 @@ ifneq ("${LINUX}", "skip")
 		;																		\
 	fi
 	@cd src/linux && echo "vorteil-$(BUNDLE_VERSION) ($(shell git rev-parse --short HEAD))"
-	@cd src/linux && KBUILD_BUILD_USER=vorteil KBUILD_BUILDHOST=vorteil.io KBUILD_BUILD_TIMESTAMP="$(shell date +%d-%m-%Y)" KBUILD_BUILD_VERSION="vorteil-$(BUNDLE_VERSION) ($(shell git rev-parse --short HEAD))" KCFLAGS="-O2 -feliminate-unused-debug-types -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -m64 -fasynchronous-unwind-tables -Wp,-D_REENTRANT -ftree-loop-distribute-patterns -Wl,-z -Wl,now -Wl,-z -Wl,relro -fno-semantic-interposition -ffat-lto-objects -fno-trapping-math -Wl,-sort-common -Wl,--enable-new-dtags" make -j8
+	@cd src/linux && KBUILD_BUILD_USER=vorteil KBUILD_BUILDHOST=vorteil.io KBUILD_BUILD_TIMESTAMP="$(shell date +%d-%m-%Y)" KBUILD_BUILD_VERSION="vorteil-$(BUNDLE_VERSION) ($(shell git rev-parse --short HEAD))" KCFLAGS="-O2 -pipe" make -j8
 	@cp src/linux/arch/x86/boot/bzImage build/linux
 endif
