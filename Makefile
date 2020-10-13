@@ -134,4 +134,4 @@ versions: version-fluent-bit version-busybox version-chrony version-strace versi
 .PHONY: dev-vinitd
 dev-vinitd: build-vinitd
 	@./bundler/build/bundler create ${BUNDLE_VERSION} ./bundler/build/bundle.config > kernel-${BUNDLE_VERSION}
-	cp kernel-${BUNDLE_VERSION} ~/.vorteild/kernels/watch/
+	cp kernel-${BUNDLE_VERSION} ~/.vorteil/kernels/watch/
