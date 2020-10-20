@@ -6,7 +6,7 @@ CC:=gcc
 SUDO := sudo
 
 # define version/branches
-FLUENTBIT := 'v1.5.4'
+FLUENTBIT := 'v1.6.1'
 BUSYBOX   := '1_32_stable'
 CHRONY    := '3.5.1'
 STRACE    := 'master'
@@ -14,7 +14,7 @@ TCPDUMP   := 'master'
 FLUENTDISK:= 'master'
 VINITD    := 'master'
 BUNDLER   := 'master'
-LINUX     := 'v5.8.12'
+LINUX     := 'v5.9.1'
 
 BUNDLE_TAGS := --tags=linux \
 				--tags=vinitd \
