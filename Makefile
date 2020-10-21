@@ -23,7 +23,6 @@ BUNDLE_TAGS := --tags=linux \
 				--tags=fluent-bit,logs \
 				--tags=chronyd,ntp \
 				--tags=busybox,shell \
-				--tags=busybox-install.sh,shell \
 				--tags=libnss_dns.so.2,logs,ntp \
 				--tags=libnss_files.so.2,logs,ntp \
 				--tags=libresolv.so.2,logs,ntp \

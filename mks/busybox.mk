@@ -31,7 +31,6 @@ ifneq ("${BUSYBOX}", "skip")
 	@cd src/busybox && make -j4
 	@mkdir -p build
 	@cp src/busybox/busybox build/busybox
-	@cp misc/busybox-install.sh build
 endif
 
 .PHONY: version-busybox
