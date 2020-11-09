@@ -8,7 +8,7 @@
 kernel-*
 
 # ignore downloaded sources and binaries
-build/
+build/*
 src/
 bundler/build/
 libseccomp-*
