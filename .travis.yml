@@ -13,6 +13,17 @@ jobs:
     - stage: build
       os: linux
       dist: bionic
+      before_install:
+        - sudo apt-get update
+        - sudo apt-get -y install libpcap-dev
+        - sudo apt-get -y install libseccomp-dev
+        - sudo apt-get -y install libssl-dev
+        - sudo apt-get -y install pkg-config
+        - sudo apt-get -y install bison
+        - sudo apt-get -y install flex
+        - sudo apt-get -y install build-essential
+        - sudo apt-get -y install cmake
+        - sudo apt-get -y install golang-go
       before_script:
         - make dependencies
         - go get -u gopkg.in/yaml.v2
@@ -41,5 +52,5 @@ jobs:
           - kernel-$BUNDLE_VERSION
         skip_cleanup: true
         draft: true
-        on: 
+        on:
           tags: true
