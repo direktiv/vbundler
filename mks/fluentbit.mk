@@ -28,7 +28,7 @@ ifneq ("${FLUENTBIT}", "skip")
 		;																		\
 	fi
 	@rm -Rf src/fluent-bit/build && mkdir -p src/fluent-bit/build
-	@cd src/fluent-bit/build && LDFLAGS="-Wl,-rpath,/vorteil -Wl,-dynamic-linker,$(LINKER_DST)" cmake .. && make
+	@cd src/fluent-bit/build && LDFLAGS="-Wl,-rpath,/vorteil -Wl,-dynamic-linker,$(LINKER_DST)" cmake -DFLB_IN_HTTP=no .. && make
 	@mkdir -p build
 	@cp src/fluent-bit/build/bin/fluent-bit build/fluent-bit
 endif
