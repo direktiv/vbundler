@@ -14,7 +14,7 @@ TCPDUMP   := 'master'
 FLUENTDISK:= 'master'
 VINITD    := 'master'
 BUNDLER   := 'master'
-LINUX     := 'v5.12.5'
+LINUX     := 'v5.12.8'
 
 BUNDLE_TAGS := --tags=linux \
 				--tags=vinitd \
