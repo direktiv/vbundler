@@ -5,7 +5,7 @@ on:
       tag:
   push:
     tags:
-      - *
+      - 22*
 jobs:
   release:
     runs-on: ubuntu-latest
