@@ -38,5 +38,5 @@ ifneq ("${TCPDUMP}", "skip")
 	cd src/tcpdump && docker build . -t tcpdump
 	docker run -v `pwd`/files:/tcpdumpout  tcpdump
 	@cd ../..
-	@cp src/tcpdump/files/tcpdump build/tcpdump
+	@cp `pwd`/files/tcpdump build/tcpdump
 endif

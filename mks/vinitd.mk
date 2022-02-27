@@ -37,6 +37,6 @@ ifneq ("${VINITD}", "skip")
 	fi
 	cd src/vinitd && docker build . -t vinitd
 	docker run -v `pwd`/files:/vinitdout vinitd
-	cp files/vinitd build/vinitd
-	strip build/vinitd
+	cp `pwd`/files/vinitd build/vinitd
+	strip `pwd`/build/vinitd
 endif

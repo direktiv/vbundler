@@ -10,31 +10,54 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      # - uses: google-github-actions/deploy-cloudrun@v0
+      #   with:
+      #     project_id: kernel-194605
+      #     credentials_json: ${{ secrets.GCLOUD }}
       - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: "^1.17.1"
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      # - uses: actions/setup-go@v2
+      #   with:
+      #     go-version: "^1.17.1"
+      # - name: Set env
+      #   run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: test version
-        run: |
-          echo ${{ env.RELEASE_VERSION }}
+        run: |  
+
+          curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-374.0.0-linux-x86_64.tar.gz
+          ls -la
+          tar -xf google-cloud-sdk-374.0.0-linux-x86_64.tar.gz
+          ./google-cloud-sdk/install.sh -q
+          echo ${{ secrets.GCLOUD }} | base64 -d > gcloud.json
+          google-cloud-sdk/bin/gcloud auth login --cred-file=`pwd`/gcloud.json
+          google-cloud-sdk/bin/gcloud config set disable_prompts true
+          google-cloud-sdk/bin/gcloud config set project ${{ secrets.GCPROJECT }}
+
           export RV=${{ env.RELEASE_VERSION }}
-          sudo apt-get update
-          sudo apt-get -y install make
-          #make dependencies
+
+          ls -la 
           echo "RV value $RV"
           if [ "$RV" == "master" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
+          echo Release: ${{ env.RELEASE_VERSION }}
+
           export RV=30.0.0
+
+          sudo apt-get update
+          sudo apt-get -y install make
+          make dependencies
+          make bundle BUNDLE_VERSION=$RV
+
           if [ "$RV" != "99.99.99" ]; then cd misc/ci/ && go run main.go -tag ${RV} -kernel-source kernels  && cp manifest.txt ../.. && cd ../..; fi
-          cat manifest.txt
-          if [ "$RV" != "99.99.99" ]; then echo ${{ secrets.KEY_PUB }} > key.pub1; fi;
-          if [ "$RV" != "99.99.99" ]; then echo ${{ secrets.KEY_PRIV }} > key.priv1; fi;
+          if [ "$RV" != "99.99.99" ]; then echo ${{ secrets.KEY_PUB }} > key.pub1 && base64 -d ./key.pub1 > ./key.pub; fi;
+          if [ "$RV" != "99.99.99" ]; then echo ${{ secrets.KEY_PRIV }} > key.priv1 && base64 -d ./key.priv1 > ./key.priv; fi;
+          if [ "$RV" != "99.99.99" ]; then gpg --allow-secret-key-import --import ./key.priv; fi;
+          if [ "$RV" != "99.99.99" ]; then gpg --armor --local-user EDEDFEF567B544F8 --detach-sig kernel-$RV; fi;
+
+          if [ "$RV" != "99.99.99" ]; then gsutil cp kernel-$BUNDLE_VERSION $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION; fi;
+          if [ "$RV" != "99.99.99" ]; then gsutil cp kernel-$BUNDLE_VERSION.asc $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION.asc; fi;
+          if [ "$RV" != "99.99.99" ]; then gsutil cp src/linux/vmlinux gs://vorteil-dl/firecracker-vmlinux/firecracker-$BUNDLE_VERSION; fi;
+          if [ "$RV" != "99.99.99" ]; then gsutil cp manifest.txt $GSUTIL_BASE/manifest.txt; fi;
           ls -la 
-          cat key.pub1
-          if [ "$RV" != "99.99.99" ]; then gpg --allow-secret-key-import --import ./key.priv1; fi;
-          ls -la 
-          
+  
       
 
 
