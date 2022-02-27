@@ -52,8 +52,8 @@ jobs:
           if [ "$RV" != "99.99.99" ]; then gpg --allow-secret-key-import --import ./key.priv; fi;
           if [ "$RV" != "99.99.99" ]; then gpg --armor --local-user EDEDFEF567B544F8 --detach-sig kernel-$RV; fi;
 
-          if [ "$RV" != "99.99.99" ]; then gsutil cp kernel-$RV  ${{ secrets.GSUTIL_BASE }}/kernels/kernel-$$RV; fi;
-          if [ "$RV" != "99.99.99" ]; then gsutil cp kernel-$RV.asc ${{ secrets.GSUTIL_BASE }}/kernels/kernel-$$RV.asc; fi;
+          if [ "$RV" != "99.99.99" ]; then gsutil cp kernel-$RV  ${{ secrets.GSUTIL_BASE }}/kernels/kernel-$RV; fi;
+          if [ "$RV" != "99.99.99" ]; then gsutil cp kernel-$RV.asc ${{ secrets.GSUTIL_BASE }}/kernels/kernel-$RV.asc; fi;
           if [ "$RV" != "99.99.99" ]; then gsutil cp src/linux/vmlinux gs://vorteil-dl/firecracker-vmlinux/firecracker-$RV; fi;
           if [ "$RV" != "99.99.99" ]; then gsutil cp manifest.txt ${{ secrets.GSUTIL_BASE }}/manifest.txt; fi;
           ls -la 
