@@ -23,9 +23,9 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install make
           #make dependencies
-          go get -u gopkg.in/yaml.v2
+          #go get -u gopkg.in/yaml.v2
           if [ "$RV" == "main" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
-          if [ "$RV" != "99.99.99" ]; then go run misc/ci/main.go -tag ${RV} -kernel-source kernels; fi
+          if [ "$RV" != "99.99.99" ]; then cd misc/ci/; && go run misc/ci/main.go -tag ${RV} -kernel-source kernels; && cp manifext.txt ../..; && cd ../..; fi
           ls -la 
       
 
@@ -37,7 +37,7 @@ jobs:
 # go:
 #   - 1.15
 
-# stages:
+# stages:go run misc/ci/main.go -t
 #   - name: build
 
 # jobs:
