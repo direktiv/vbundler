@@ -26,9 +26,11 @@ jobs:
           echo "RV value $RV"
           if [ "$RV" == "master" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
           if [ "$RV" != "99.99.99" ]; then cd misc/ci/ && go run main.go -tag ${RV} -kernel-source kernels  && cp manifest.txt ../.. && cd ../..; fi
-          if [ "$RV" != "99.99.99" ]; then echo $KEY_PUB > key.pub1 && base64 -d ./key.pub1 > ./key.pub; fi;
-          if [ "$RV" != "99.99.99" ]; then echo $KEY_PRIV > key.priv1 && base64 -d ./key.priv1 > ./key.priv; fi;
+          if [ "$RV" != "99.99.99" ]; then echo $KEY_PUB > key.pub1; fi;
+          if [ "$RV" != "99.99.99" ]; then echo $KEY_PRIV > key.priv1; fi;
+          if [ "$RV" != "99.99.99" ]; then gpg --allow-secret-key-import --import ./key.priv; fi;
           ls -la 
+          cat key.pub1
       
 
 
