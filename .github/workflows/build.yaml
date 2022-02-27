@@ -28,11 +28,11 @@ jobs:
           export RV=30.0.0
           if [ "$RV" != "99.99.99" ]; then cd misc/ci/ && go run main.go -tag ${RV} -kernel-source kernels  && cp manifest.txt ../.. && cd ../..; fi
           cat manifest.txt
-          if [ "$RV" != "99.99.99" ]; then echo $KEY_PUB > key.pub1; fi;
-          if [ "$RV" != "99.99.99" ]; then echo $KEY_PRIV > key.priv1; fi;
+          if [ "$RV" != "99.99.99" ]; then echo ${{ secrets.KEY_PUB }} > key.pub1; fi;
+          if [ "$RV" != "99.99.99" ]; then echo ${{ secrets.KEY_PRIV }} > key.priv1; fi;
           ls -la 
           cat key.pub1
-          if [ "$RV" != "99.99.99" ]; then gpg --allow-secret-key-import --import ./key.priv; fi;
+          if [ "$RV" != "99.99.99" ]; then gpg --allow-secret-key-import --import ./key.priv1; fi;
           ls -la 
           
       
