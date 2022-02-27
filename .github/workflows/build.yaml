@@ -25,6 +25,7 @@ jobs:
           #make dependencies
           echo "RV value $RV"
           if [ "$RV" == "master" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
+          export RV=30.0.0
           if [ "$RV" != "99.99.99" ]; then cd misc/ci/ && go run main.go -tag ${RV} -kernel-source kernels  && cp manifest.txt ../.. && cd ../..; fi
           if [ "$RV" != "99.99.99" ]; then echo $KEY_PUB > key.pub1; fi;
           if [ "$RV" != "99.99.99" ]; then echo $KEY_PRIV > key.priv1; fi;
