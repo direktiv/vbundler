@@ -39,7 +39,7 @@ jobs:
           if [ "$RV" == "master" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
           echo Release: ${{ env.RELEASE_VERSION }}
 
-          export RV=30.0.0
+          export RV=30.0.1
 
           sudo apt-get update
           sudo apt-get -y install make
