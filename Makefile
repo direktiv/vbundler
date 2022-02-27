@@ -111,7 +111,7 @@ dependencies: update
 			if [ ! -f /usr/include/libelf.h ]; then \
 				${SUDO} apt-get install -y libelf-dev; \
 			fi; \
-			${SUDO} apt-get install -y libc-ares-dev
+			${SUDO} apt-get install -y libc-ares-dev; \
 		else \
 			echo "Couldn't find package manager. Skipped installing prerequisite packages."; \
 		fi
