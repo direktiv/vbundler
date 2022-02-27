@@ -5,7 +5,7 @@ on:
       tag:
   push:
     tags:
-      - v*
+      - *
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -22,9 +22,10 @@ jobs:
           export RV=${{ env.RELEASE_VERSION }}
           sudo apt-get update
           sudo apt-get -y install make
-          make dependencies
+          #make dependencies
+          go get -u gopkg.in/yaml.v2
           if [ "$RV" == "main" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
-          if [ "$RV" != "99.99.99" ]; then go run misc/ci/main.go -tag ${RV} -kernel-source kernels; fi;
+          if [ "$RV" != "99.99.99" ]; then go run misc/ci/main.go -tag ${RV} -kernel-source kernels; fi
           ls -la 
       
 
