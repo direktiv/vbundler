@@ -10,7 +10,14 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      # - uses: google-github-actions/deploy-cloudrun@v0
+      #   with:
+      #     project_id: kernel-194605
+      #     credentials_json: ${{ secrets.GCLOUD }}
       - uses: actions/checkout@v2
+      # - uses: actions/setup-go@v2
+      #   with:
+      #     go-version: "^1.17.1"
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: test version
@@ -27,9 +34,11 @@ jobs:
 
           export RV=${{ env.RELEASE_VERSION }}
 
+          ls -la 
           echo "RV value $RV"
           if [ "$RV" == "master" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
           echo Release: ${{ env.RELEASE_VERSION }}
+
 
           sudo apt-get update
           sudo apt-get -y install make
