@@ -1,0 +1,83 @@
+name: "build vbundle"
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+  push:
+    tags:
+      - v*
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: "^1.17.1"
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: test version
+        run: |
+          echo ${{ env.RELEASE_VERSION }}
+          sudo apt-get update
+          sudo apt-get -y install make
+          ls -la 
+      
+
+
+# dist: bionic
+
+# language: go
+
+# go:
+#   - 1.15
+
+# stages:
+#   - name: build
+
+# jobs:
+#   include:
+#     - stage: build
+#       os: linux
+#       dist: bionic
+#       before_install:
+#         - sudo apt-get update
+#         - sudo apt-get -y install libpcap-dev
+#         - sudo apt-get -y install libseccomp-dev
+#         - sudo apt-get -y install libssl-dev
+#         - sudo apt-get -y install pkg-config
+#         - sudo apt-get -y install bison
+#         - sudo apt-get -y install flex
+#         - sudo apt-get -y install build-essential
+#         - sudo apt-get -y install cmake
+#         - sudo apt-get -y install golang-go
+#       before_script:
+#         - make dependencies
+#         - go get -u gopkg.in/yaml.v2
+#       script:
+#         - if [ -z "$TRAVIS_TAG" ]; then export BUNDLE_VERSION=99.99.99; else export BUNDLE_VERSION=$TRAVIS_TAG; fi;
+#         - echo $TRAVIS_TAG
+#         - export GOBINARYDIR=/home/travis/gopath/bin/
+#         -  echo $GKEY > ./gkey64 && md5sum ./gkey64
+#         - if [ ! -z "$TRAVIS_TAG" ]; then base64 -d ./gkey64 > ./gkey; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gcloud auth activate-service-account --key-file ./gkey; fi;
+#         - make bundle BUNDLE_VERSION=$BUNDLE_VERSION
+#         - if [ ! -z "$TRAVIS_TAG" ]; then go run misc/ci/main.go -tag ${BUNDLE_VERSION} -kernel-source kernels; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then echo $KEY_PUB > key.pub1 && base64 -d ./key.pub1 > ./key.pub; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then echo $KEY_PRIV > key.priv1 && base64 -d ./key.priv1 > ./key.priv; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gpg --import ./key.pub; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gpg --allow-secret-key-import --import ./key.priv; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gpg --armor --local-user $KEY_ID --detach-sig kernel-$BUNDLE_VERSION; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp kernel-$BUNDLE_VERSION $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp kernel-$BUNDLE_VERSION.asc $GSUTIL_BASE/kernels/kernel-$BUNDLE_VERSION.asc; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp src/linux/vmlinux gs://vorteil-dl/firecracker-vmlinux/firecracker-$BUNDLE_VERSION; fi;
+#         - if [ ! -z "$TRAVIS_TAG" ]; then gsutil cp manifest.txt $GSUTIL_BASE/manifest.txt; fi;
+#       deploy:
+#         provider: releases
+#         api_key: $GTOKEN
+#         file:
+#           - kernel-$BUNDLE_VERSION
+#         skip_cleanup: true
+#         draft: true
+#         on:
+#           tags: true
