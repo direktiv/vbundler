@@ -19,8 +19,12 @@ jobs:
       - name: test version
         run: |
           echo ${{ env.RELEASE_VERSION }}
+          export RV=${{ env.RELEASE_VERSION }}
           sudo apt-get update
           sudo apt-get -y install make
+          make dependencies
+          if [ "$RV" == "main" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
+          if [ "$RV" != "99.99.99" ]; then go run misc/ci/main.go -tag ${RV} -kernel-source kernels; fi;
           ls -la 
       
 
