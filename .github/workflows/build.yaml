@@ -25,7 +25,7 @@ jobs:
           #make dependencies
           #go get -u gopkg.in/yaml.v2
           if [ "$RV" == "main" ] || [ "$RV" == "" ] ; then export RV=99.99.99; fi
-          if [ "$RV" != "99.99.99" ]; then cd misc/ci/; && go run misc/ci/main.go -tag ${RV} -kernel-source kernels; && cp manifext.txt ../..; && cd ../..; fi
+          if [ "$RV" != "99.99.99" ]; then cd misc/ci/ && go run main.go -tag ${RV} -kernel-source kernels  && cp manifest.txt ../.. && cd ../..; fi
           ls -la 
       
 
