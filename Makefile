@@ -6,15 +6,15 @@ CC:=gcc
 SUDO := sudo
 
 # define version/branches
-FLUENTBIT := 'v1.6.10'
-BUSYBOX   := '1_32_stable'
-CHRONY    := '3.5.1'
+FLUENTBIT := 'v1.8.12'
+BUSYBOX   := '1_33_2'
+CHRONY    := '4.2'
 STRACE    := 'master'
 TCPDUMP   := 'master'
 FLUENTDISK:= 'master'
 VINITD    := 'master'
 BUNDLER   := 'master'
-LINUX     := 'v5.12.8'
+LINUX     := 'v5.16.11'
 
 BUNDLE_TAGS := --tags=linux \
 				--tags=vinitd \
@@ -111,6 +111,7 @@ dependencies: update
 			if [ ! -f /usr/include/libelf.h ]; then \
 				${SUDO} apt-get install -y libelf-dev; \
 			fi; \
+			${SUDO} apt-get install -y libc-ares-dev
 		else \
 			echo "Couldn't find package manager. Skipped installing prerequisite packages."; \
 		fi

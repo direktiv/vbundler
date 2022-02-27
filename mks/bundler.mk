@@ -7,7 +7,7 @@ update-bundler: 	## Re-clone bundler.
 ifneq ("${BUNDLER}", "skip")
 	@rm -rf src/bundler
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${BUNDLER} https://github.com/vorteil/bundler.git --depth 1; \
+	@cd src && if git clone --single-branch --branch=${BUNDLER} https://github.com/direktiv/bundler.git --depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \

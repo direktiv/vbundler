@@ -16,7 +16,7 @@ ifneq ("${VINITD}", "skip")
 	@rm -f build/vinitd
 	@rm -rf src/vinitd
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${VINITD} https://github.com/vorteil/vinitd.git --depth 1; \
+	@cd src && if git clone --single-branch --branch=${VINITD} https://github.com/direktiv/vinitd.git --depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \
@@ -35,7 +35,8 @@ ifneq ("${VINITD}", "skip")
 			exit 1																\
 		;																		\
 	fi
-	@cd src/vinitd && make all
-	@cp src/vinitd/build/vinitd build
-	@strip build/vinitd
+	cd src/vinitd && docker build . -t vinitd
+	docker run -v `pwd`/files:/vinitdout vinitd
+	cp files/vinitd build/vinitd
+	strip build/vinitd
 endif

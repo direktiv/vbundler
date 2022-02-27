@@ -16,7 +16,7 @@ ifneq ("${TCPDUMP}", "skip")
 	@rm -f build/tcpdump
 	@rm -rf src/tcpdump
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${TCPDUMP} https://github.com/vorteil/tcpdump.git --depth 1; \
+	@cd src && if git clone --single-branch --branch=${TCPDUMP} https://github.com/direktiv/tcpdump.git --depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \
@@ -35,6 +35,8 @@ ifneq ("${TCPDUMP}", "skip")
 			exit 1																\
 		;																		\
 	fi
-	@cd src/tcpdump && CGO_LDFLAGS="-static -w -s -Wl,--dynamic-linker=/vorteil/ld-linux-x86-64.so.2 -Wl,-rpath,/vorteil" go build -v -tags netgo
-	@cp src/tcpdump/tcpdump build/tcpdump
+	cd src/tcpdump && docker build . -t tcpdump
+	docker run -v `pwd`/files:/tcpdumpout  tcpdump
+	@cd ../..
+	@cp src/tcpdump/files/tcpdump build/tcpdump
 endif

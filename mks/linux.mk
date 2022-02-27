@@ -17,7 +17,7 @@ ifneq ("${LINUX}", "skip")
 	@rm -rf src/linux
 	@rm -rf src/vlinux
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${LINUX} git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git --depth 1; \
+	@cd src && if git clone --depth=5--single-branch --branch=${LINUX} git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git --depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \
@@ -38,7 +38,7 @@ ifneq ("${LINUX}", "skip")
 	fi
 	@if [ ! -d src/linux/drivers/_vorteil ]; 													\
 		then																	\
-				cd src && rm -Rf vlinux && git clone https://github.com/vorteil/vlinux.git --depth 1 && \
+				cd src && rm -Rf vlinux && git clone https://github.com/direktiv/vlinux.git --depth 1 && \
 				cd linux && git apply ../vlinux/0001-vorteil-${LINUX}.patch \
 		;																		\
 	fi

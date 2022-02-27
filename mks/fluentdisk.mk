@@ -16,7 +16,7 @@ ifneq ("${FLUENTDISK}", "skip")
 	@rm -f build/fluent-bit-disk
 	@rm -rf src/fluent-bit-disk
 	@mkdir -p src
-	@cd src && if git clone --single-branch --branch=${FLUENTDISK} https://github.com/vorteil/fluent-bit-disk.git --depth 1; \
+	@cd src && if git clone --single-branch --branch=${FLUENTDISK} https://github.com/direktiv/fluent-bit-disk.git --depth 1; \
 	then \
 			echo "Successfully cloned repository."  \
 		; else \

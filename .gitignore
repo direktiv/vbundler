@@ -13,3 +13,4 @@ src/
 bundler/build/
 libseccomp-*
 libpcap-*
+files/
